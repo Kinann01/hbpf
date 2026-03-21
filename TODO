@@ -1,0 +1,18 @@
+Main TODO:
+- Support error handling for each instruction to conform to the specification (RFC 9669)
+  - Return Either/Validation instead of calling error() for assembly-time failures
+  - Ensure unused fields are cleared to zero per RFC 9669
+- BPF map support: map create/lookup/update/delete via helpers
+- Kernel loading: BPF_PROG_LOAD syscall or libbpf FFI
+
+Done (no longer TODO):
+- [x] Program builder monad (Layer 2): BPF monad, emit, labels, jump fixups, assemble, camelCase API
+- [x] BPF helper function wrappers: Helpers.hs with typed names for map ops, tracing, time, networking, ringbuf
+- [x] Project renamed from ebpf-asm to hbpf
+- [x] Atomic instructions (BPF_ATOMIC mode): basic, fetch, xchg, cmpxchg (32/64-bit)
+- [x] LDX, ST, STX (load/store memory instructions, all widths)
+- [x] END (byte-swap) instructions: bpf_tole, bpf_toBe, bpf_bswap
+- [x] Fix MOV{32,64} to also accept immediate values
+- [x] Jump instructions: all conditional variants (64-bit and 32-bit comparison)
+- [x] bpf_call, bpf_exit
+- [x] Extended 128-bit instruction format: ExtendedInstruction encoding + bpf_ld_imm64

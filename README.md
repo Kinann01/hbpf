@@ -35,6 +35,8 @@ myProg = do
   exit
 ```
 
+For a complete Layer 2 real life example — an execve tracepoint that reads the PID, command name, and filename — see [app/Trace_execve.hs](app/Trace_execve.hs).
+
 ## Building
 
 ```

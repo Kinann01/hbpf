@@ -2,20 +2,20 @@
 
 A Haskell eDSL for writing eBPF programs with compile-time safety guarantees.
 
-hbpf leverages Haskell's type system, purity, and static verification to produce correct eBPF bytecode — shifting the burden of correctness from the kernel verifier to the compiler. The goal is for eBPF programs to be written directly in Haskell rather than C, with the type system enforcing invariants that would otherwise only be caught at load time by the in-kernel verifier.
+hbpf leverages Haskell's type system, purity, and static verification to produce correct eBPF bytecode — shifting the burden of correctness from the kernel verifier to the compiler. The goal is for eBPF programs to be written directly in Haskell, with the type system enforcing invariants that would otherwise only be caught at load time by the in-kernel verifier.
 
 ## Architecture
 
 The library is built in layers:
 
-**Layer 1 — Instruction Set (RFC 9669)**
-A complete, typed encoding of the eBPF instruction set as defined in [RFC 9669](https://www.rfc-editor.org/rfc/rfc9669.html). This includes all ALU, jump, load/store, atomic, and byte-swap operations, along with binary encoding to bytecode.
+**Layer 1 — Instruction Set (RFC 9669)** *(complete)*
+A typed encoding of the eBPF instruction set as defined in [RFC 9669](https://www.rfc-editor.org/rfc/rfc9669.html). All ALU, jump, load/store, atomic, and byte-swap operations, along with binary encoding to bytecode.
 
-**Layer 2 — Program Builder** *(current focus)*
-A monadic DSL for composing full eBPF programs. Provides symbolic labels, automatic jump offset resolution, helper function calls, and a clean API that assembles down to a flat instruction stream. This is where most development is happening.
+**Layer 2 — Program Builder** *(complete)*
+A monadic DSL for composing full eBPF programs. Symbolic labels, automatic jump offset resolution, helper function calls, and a clean API that assembles down to a flat instruction stream.
 
-**Layer 3 — Kernel Integration** *(planned)*
-Loading compiled programs into the kernel, map support, and program type enforcement.
+**Layer 3 — Higher-Level DSL & Kernel Integration** *(next)*
+Stack management, typed map access, program type restrictions via phantom types, structured control flow, and kernel loading.
 
 ## Quick Example
 
@@ -46,7 +46,7 @@ Requires GHC 9.6+.
 
 ## Status
 
-This is an active research project. Layer 2 (program construction) is functional and covers the full eBPF instruction set including atomics, wide loads, and all jump variants. The next step is kernel loading and map support. See [docs/why.md](docs/why.md) for the motivation and research direction.
+This is an active research project. Layers 1 and 2 are complete — the full eBPF instruction set (including atomics, wide loads, and all jump variants) can be assembled into programs with symbolic labels and automatic offset resolution. The next step is Layer 3: typed map access, stack management, and kernel loading. See [docs/why.md](docs/why.md) for the motivation and research direction.
 
 ## License
 

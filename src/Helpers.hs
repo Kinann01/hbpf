@@ -78,6 +78,15 @@ helper_probe_read_str_id = 45
 helper_probe_read_str :: Instruction
 helper_probe_read_str = bpf_call helper_probe_read_str_id
 
+helper_probe_read_user_str_id :: HelperID
+helper_probe_read_user_str_id = 114
+
+-- | Read a NUL-terminated string from user-space memory.
+--   R1 = destination pointer, R2 = max size, R3 = unsafe user pointer.
+--   Returns number of bytes read (including NUL), or negative error.
+helper_probe_read_user_str :: Instruction
+helper_probe_read_user_str = bpf_call helper_probe_read_user_str_id
+
 -- ---------------------------------------------------------------------------
 -- Time
 -- ---------------------------------------------------------------------------

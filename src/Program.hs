@@ -54,6 +54,12 @@ module Program
   , jset64, jset32
   , ja, ja32
 
+  -- * call helper functions
+  , bpfGetCurrentPidTgid
+  , bpfGetCurrentComm
+  , bpfProbeReadUserStr
+  , bpfPrintk
+
     -- * Control flow
   , exit
   , call
@@ -70,6 +76,7 @@ import qualified Data.Sequence as Seq
 import GenericInstructions (SourceType)
 import qualified Instructions as I
 import Types
+import Helpers  
 
 -- ---------------------------------------------------------------------------
 -- Types
@@ -541,3 +548,20 @@ atomicCmpxchg64 dst src off = emit $ I.bpf_atomic_cmpxchg64 dst src off
 
 atomicCmpxchg32 :: Reg -> Reg -> Int16 -> BPF ()
 atomicCmpxchg32 dst src off = emit $ I.bpf_atomic_cmpxchg32 dst src off
+
+
+-- ---------------------------------------------------------------------------
+-- Helper wrappers
+-- ---------------------------------------------------------------------------
+
+bpfGetCurrentPidTgid :: BPF ()
+bpfGetCurrentPidTgid = emit helper_get_current_comm
+
+bpfGetCurrentComm :: BPF ()
+bpfGetCurrentComm = emit helper_get_current_comm
+
+bpfProbeReadUserStr :: BPF ()
+bpfProbeReadUserStr = emit helper_probe_read_user_str
+
+bpfPrintk :: BPF()
+bpfPrintk = emit helper_trace_printk
